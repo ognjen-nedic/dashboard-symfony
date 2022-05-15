@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% if not developer %}    
+    {% set page_title = 'No developer found!' %}
+{% else %}
+    {% set page_title = "#{developer.getFirstName()} #{developer.getLastName()}" %}   
+{% endif %}
+
+{% block title %} {{ page_title }} {% endblock %}
+
+{% block head %} 
+    <link rel="stylesheet" href="{{ asset('css/developer_details.css')}}">
+{% endblock head %}
+
+{% block body %}
+    <div class="overlay"></div>
+    <div class="container">
+        {% include 'navigation.html.twig' %}
+        <main>
+            <div class="content-profile">
+                <div class="profile-details-container">
+                    <div class="profile-details">
+                        <div class="profile-first-segment">
+                            <img class="edit-developer-button" src="{{ asset('icon/edit.svg') }}" id="edit-profile-details" alt="Edit button">
+                            {% if developer.getAvatarPath() is not same as(null) %}
+                                <img class="avatar_image" src="{{ asset('img/'~ developer.getAvatarPath() ~'.jpg') }}"/>
+                            {% else %}
+                                <img class="avatar_image" src="{{ asset('img/developers/developer_placeholder.jpg') }}"/>
+                            {% endif %}
+                            <h2> {{ developer.getFirstName() }} 
+                            {{ developer.getLastName() }}</h2>
+                        </div>
+                        <div class="profile-information">
+                            <ul>
+                                <li><strong>Email: </strong> {{ developer.getEmail() }}</li>
+                                <li><strong>Phone: </strong> {{ developer.getPhone() }}</li>
+                                <li><strong>Location: </strong>{{ developer.getStreet() }}, {{ developer.getCity() }} ({{ developer.getPTT() }}), {{ developer.getCountry() }}</li>
+                                <li><strong>Bank account:</strong> {{ developer.getBankAccount() }}</li>
+                            </ul>
+                            <form method="POST" class="basic-form">
+                                <input type="month" name="month" id="filter-form-month-input"/>
+                                <select name="client">
+                                    {% for client in clients %}
+                                        <option value="{{ client.getId() }}">
+                                            {{ client.getClientName() }} 
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                <div class="form-controls">
+                                    <button style="width: 75px" name="reset-page" class="white-btn" >Reset</button>
+                                    <input style="width: 150px" class="blue-btn" type="submit" name="filter_by_month_and_client"/>
+                                </div>
+                            </form>
+                            <a class="white-btn" href="{{ path('admin_developers_view') }}"> Back to developers list </a>
+                        </div>                        
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Task description</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for task in tasks %}
+                            <tr>
+                                <td> {{ task.getClient().getClientName() }} </td>
+                                <td> {{ task.getTaskDescription() }} </td>
+                                <td> {{ task.getDate()|date('m/d/Y') }} </td>
+                                <td> {{ task.getTime()|format_datetime(pattern="HH:mm:ss") }} </td>
+                            {% else %}
+                                <td colspan="4" style="text-align: center">No tasks</td>
+                            {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+        <aside>
+            <div class="right-side-drawer">
+                <div class="right-side-drawer-input-fields">
+                    {{ form_start(form) }}
+                        {{ form_widget(form.firstName) }}
+                        {{ form_errors(form.firstName) }}
+
+                        {{ form_widget(form.lastName) }}
+                        {{ form_errors(form.lastName) }}
+
+                        {{ form_widget(form.email) }}
+                        {{ form_errors(form.email) }}
+
+                        {{ form_widget(form.phone) }}
+                        {{ form_errors(form.phone) }}
+
+                        {{ form_widget(form.street) }}
+                        {{ form_errors(form.street) }}
+
+                        {{ form_widget(form.city) }}
+                        {{ form_errors(form.city) }}
+
+                        {{ form_widget(form.PTT) }}
+                        {{ form_errors(form.PTT) }}
+
+                        {{ form_widget(form.country) }}
+                        {{ form_errors(form.country) }}
+
+                        {{ form_widget(form.bankAccount) }}
+                        {{ form_errors(form.bankAccount) }}
+
+                        <div class="form-controls">
+                            <a class="cancel-btn" href="#"> Cancel </a>
+                            {{ form_row(form.submit) }}
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </aside>
+    </div>
+<script src="{{ asset('js/developer-details.js')}}"></script>
+<script>
+
+// Script that puts default value of month input filed to current month
+
+var today = new Date();
+var defaultValue = today.getFullYear()+'-'+(("0" + (today.getMonth() + 1)).slice(-2));
+
+var inputField = document.getElementById('filter-form-month-input');
+inputField.value = defaultValue;
+
+</script>
+{% endblock %}

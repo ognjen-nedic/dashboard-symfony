@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Login! {% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" href="{{ asset('css/log-in.css')}}">
+    <div class="white-box">
+        <img id="logo" src="{{asset('img/universal-logo.png')}}" alt="Company logo">
+        <div class="content">
+            <h1>Login</h1>
+            {% if error %}
+                <div> {{ error.messageKey|trans(error.messageData, 'security') }} </div>
+                {# {{ error.message  }} #}
+            {% endif %}
+            <form action="{{ path('login_form') }}" method="POST">
+                <input type="text" id="username" name="_username" placeholder="E-mail"/>        
+
+                <input type="password" id="password" name="_password" placeholder="Password"/>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <input type="submit" value="Submit"/>
+            </form>
+        <div>
+    </div>
+{% endblock %}

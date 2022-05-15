@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Clients List{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ asset('css/clients_list.css')}}">
+{% endblock head %}
+
+
+{% block body %}
+    <div class="overlay"></div>
+    <div class="container">
+        {% include 'navigation.html.twig' %}
+        <main>
+            <div class="content-tables">
+                <div class="non-table-content">
+                    <form method="POST">
+                        <input class="search" placeholder="All" type="text" name="client_name"/>
+                        <input class="blue-btn" type="submit" name="search_client" value="Search"/>
+                    </form>
+
+                    <button class="add-client-button blue-btn" ><a style="color:white">Add new client</a></button>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Avatar</th>
+                            <th>Client Name</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for client in clients %}
+                            <tr>
+                                {% if client.getAvatarPath() is not same as(null) %}
+                                    <td> <img class="avatar_image" src="{{ asset('img/'~ client.getAvatarPath() ~'.jpg') }}"/> </td>
+                                {% else %}
+                                    <td> <img class="avatar_image" src="{{ asset('img/clients/client_placeholder.jpg') }}"/> </td>
+                                {% endif %}
+                                <td> {{ client.getClientName() }} </td>
+                                <td><a href="{{ path('admin_client_details', {id: client.getId()}) }}"><img src="{{ asset('icon/eye.svg') }}"></a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <aside>
+            <div class="right-side-drawer">
+                <div class="right-side-drawer-input-fields">
+                    {{ form_start(form) }}
+                        {{ form_widget(form.clientName) }}
+                        {{ form_errors(form.clientName) }}
+
+                        {{ form_widget(form.email) }}
+                        {{ form_errors(form.email) }}
+
+                        {{ form_widget(form.billing) }}
+                        {{ form_errors(form.billing) }}
+
+                        {{ form_widget(form.paymentMethod) }}
+                        {{ form_errors(form.paymentMethod) }}
+
+                        <div class="form-controls">
+                            <a class="cancel-btn" href="#"> Cancel </a>
+                            {{ form_row(form.submit) }}
+                        </div>
+                    {{ form_end(form) }}
+                <div>
+            </div>
+        </aside>
+    </div>
+    <script src="{{ asset('js/clients-list.js')}}"></script>
+{% endblock %}

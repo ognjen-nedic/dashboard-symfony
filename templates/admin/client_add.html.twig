@@ -1,0 +1,34 @@
+{# {% extends 'base.html.twig' %}
+
+{% block title %} Add new client {% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% include 'navigation.html.twig' %}
+        <main>
+            <div class="right-side-drawer active">
+                <div class="right-side-drawer-input-fields">
+                    {{ form_start(form) }}
+                        {{ form_widget(form.clientName) }}
+                        {{ form_errors(form.clientName) }}
+
+                        {{ form_widget(form.email) }}
+                        {{ form_errors(form.email) }}
+
+                        {{ form_widget(form.billing) }}
+                        {{ form_errors(form.billing) }}
+
+                        {{ form_widget(form.paymentMethod) }}
+                        {{ form_errors(form.paymentMethod) }}
+
+                        <div class="form-controls">
+                            <a class="cancel-btn" href="#"> Cancel </a>
+                            {{ form_row(form.submit) }}
+                        </div>
+
+                    {{ form_end(form) }}
+                <div>
+            </div>
+        </main>
+    </div>
+{% endblock %} #}

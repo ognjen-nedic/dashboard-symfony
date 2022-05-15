@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ client.getClientName() }} {% endblock %}
+
+{% block head %} 
+    <link rel="stylesheet" href="{{ asset('css/client_details.css')}}">
+{% endblock head %}
+
+{% block body %}
+    <div class="overlay"></div>
+    <div class="container">
+        {% include 'navigation.html.twig' %}
+        <main>
+            <div class="content-profile">
+                <div class="profile-details-container">
+                    <div class="profile-first-segment">
+                        <img class="edit-client-button" src="{{ asset('icon/edit.svg') }}" id="edit-profile-details" alt="Edit button">
+                        {% if client.getAvatarPath() is not same as(null) %}
+                                    <img class="avatar_image" src="{{ asset('img/'~ client.getAvatarPath() ~'.jpg') }}"/>
+                                {% else %}
+                                    <img class="avatar_image" src="{{ asset('img/clients/client_placeholder.jpg') }}"/>
+                                {% endif %}
+                        <h1> {{ client.getClientName() }} </h1>
+                    </div>
+                    <div class="profile-information">
+                        <ul>
+                            <li><strong>Email:</strong> {{ client.getEmail() }}</li>
+                            <li><strong>Billing:</strong> {{ client.getBilling() }}</li>
+                            <li><strong>Payment Method: </strong> {{ client.getPaymentMethod() }} </li>
+                        </ul>
+                        <form method="POST" class="basic-form">
+                            <input type="month" name="month" id="filter-form-month-input"/>
+                            <select name="developer">
+                                {% for developer in developers %}
+                                    <option value="{{ developer.getId() }}">
+                                        {{ developer.getFirstName() }} {{ developer.GetLastName() }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <div class="form-controls">
+                                <button style="width: 75px" name="reset-page" class="white-btn" >Reset</button>
+                                <input style="width: 150px" class="blue-btn" type="submit" name="filter_by_month_and_developer"/>
+                            </div>
+                        </form>
+
+
+                        <a class="white-btn" href="{{ path('admin_clients_view') }}" > Back to clients list </a>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Developer</th>
+                                <th>Task description</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Options</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for task in tasks %}
+                            <tr>
+                                <td> {{ task.getDeveloper().getFirstName() }} {{ task.getDeveloper().getLastName() }}</td>
+                                <td> {{ task.getTaskDescription() }} </td>
+                                <td> {{ task.getDate()|date('m/d/Y') }} </td>
+                                <td> {{ task.getTime()|format_datetime(pattern="HH:mm:ss") }} </td>
+                                <td> <a href="{{ path('admin_task_details', {id: task.getId()}) }}"><img src="{{ asset('icon/eye.svg') }}"></a> </td>
+                            {% else %}
+                                <td colspan="5" style="text-align: center">No tasks</td>
+                            {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+        <aside>
+            <div class="right-side-drawer">
+                <div class="right-side-drawer-input-fields">
+                    <h2> Edit this client </h2>
+                    {{ form_start(form) }}
+                        {{ form_widget(form.clientName) }}
+                        {{ form_errors(form.clientName) }}
+
+                        {{ form_widget(form.email) }}
+                        {{ form_errors(form.email) }}
+
+                        {{ form_widget(form.billing) }}
+                        {{ form_errors(form.billing) }}
+
+                        {{ form_widget(form.paymentMethod) }}
+                        {{ form_errors(form.paymentMethod) }}
+
+                        <div class="form-controls">
+                            <a class="cancel-btn" href="#"> Cancel </a>
+                            {{ form_row(form.submit) }}
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </aside>
+    <div class="container">
+    <script src="{{ asset('js/client-details.js')}}"></script>
+    <script>
+
+    // Script that puts default value of month input filed to current month
+
+    var today = new Date();
+    var defaultValue = today.getFullYear()+'-'+(("0" + (today.getMonth() + 1)).slice(-2));
+
+    var inputField = document.getElementById('filter-form-month-input');
+    inputField.value = defaultValue;
+
+    </script>
+{% endblock %}

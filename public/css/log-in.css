@@ -1,0 +1,89 @@
+/* CONTENT */
+body {
+    background-image: url(../img/log-in-background.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.white-box {
+    background-color: rgba(255,255,255,0.80);
+    border-radius: 45px;
+    max-width: 650px;
+    max-height: 650px;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    margin: auto;
+    border: 15px solid transparent;
+    background-clip: padding-box;
+}
+
+#logo {
+    width: 250px;
+    align-self: center;
+    position: absolute;
+    top: 45px;
+    left: 0; right: 0; 
+    margin: 0 auto;
+}
+
+.content {
+    align-self: center;
+    width: 70%;
+    height: fit-content;
+    margin: auto;
+    top: 0; right: 0; bottom: 0; left: 0;
+    position: absolute;
+    padding-top: 100px;
+}
+
+.content p {
+    font-weight: 700;
+    font-size: 30px;
+}
+
+input {
+    width: 100%;
+    height: 40px;
+    border-radius: 6px;
+    display: block;
+    margin: 30px auto;
+    border: 0;
+    padding: 7px 16px;
+}
+
+.password {
+    width: 100%;
+    background-color: white;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.password-hide {
+    display: none;
+    padding-right: 25px;
+}
+
+.password-show {
+    display: inline;
+    padding-right: 25px;
+}
+
+.password-show.active {
+    display: inline;
+}
+
+.password-field {
+    width: 80%;
+    display: inline;
+    border-radius: 6px 0 0 6px;
+    margin: 0;
+}
+
+input[type="submit"] {
+    background: rgb(51,114,237);
+    background: linear-gradient(0deg, rgba(51,114,237,1) 0%, rgba(17,56,194,1) 100%);
+    color: white;
+}

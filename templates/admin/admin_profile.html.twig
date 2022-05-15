@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} My profile {% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% include 'navigation.html.twig' %}
+        <main>
+            <div class="content-profile" style="display: block">
+                <h1> This is administrator's profile </h1>
+
+                <p> <strong>E-mail: </strong>{{ app.user.getEmail() }} </p>
+
+                <button class="blue-btn" ><a style="color: white" href="{{ path('logout') }}">Logout</a></button>
+            </div>
+        </main>
+    </div>
+    
+{% endblock %}

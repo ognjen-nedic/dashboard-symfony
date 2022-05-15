@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Developers List{% endblock %}
+
+{% block head %}<link rel="stylesheet" href="{{ asset('css/developers_list.css')}}">{% endblock head %}
+
+{% block body %}
+    <div class="container">
+        {% include 'navigation.html.twig' %}
+        <main>
+            <div class="content-tables">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Avatar</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>E-mail</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for developer in developers %}
+                            <tr>
+                                {% if developer.getAvatarPath() is not same as(null) %}
+                                <td> <img class="avatar_image" src="{{ asset('img/'~ developer.getAvatarPath() ~'.jpg') }}"/> </td>
+                                {% else %}
+                                <td> <img class="avatar_image" src="{{ asset('img/developers/developer_placeholder.jpg') }}"/> </td>
+                                {% endif %}
+                                <td> {{ developer.getFirstName() }} </td>
+                                <td> {{ developer.getLastName() }} </td>
+                                <td> {{ developer.getEmail() }} </td>
+                                <td>
+                                <a href="{{ path('admin_developer_details', {id: developer.getId()}) }}" ><img src="{{ asset('icon/eye.svg') }}"></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+{% endblock %}

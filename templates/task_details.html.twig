@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Task details {% endblock %}
+
+{% block head %} 
+    <link rel="stylesheet" href="{{ asset('css/task_details.css')}}">
+{% endblock head %}
+
+{% block body %}
+    <div class="overlay"></div>
+    <div class="container">
+        {% if(app.user.getRoles()[0] == "ROLE_ADMIN") %}
+            {% include 'navigation.html.twig' %}
+        {% endif %}
+        {% if(app.user.getRoles()[0] == "ROLE_DEVELOPER") %}
+            <header>
+                <img id="logo" src="{{asset('img/universal-logo.png')}}" alt="Company logo">
+            </header>
+        {% endif %}
+        <main>
+            <div class="content-profile" style="display: block">
+                <h1> Task for {{ task.getClient().getClientName() }} by {{ task.getDeveloper().getFirstName() }} {{ task.getDeveloper().getLastName() }} </h1>
+                {% if(app.user.getRoles()[0] == "ROLE_DEVELOPER") %}
+                    <button class="white-btn" id="edit-task-btn">Edit task</button>
+                {% endif %}
+
+                <p><strong>Date:</strong>{{ task.getDate()|date('m/d/Y') }} {{ task.getTime()|format_datetime(pattern="HH:mm:ss") }} </p>
+
+                <p><strong>Description:</strong>{{ task.getTaskDescription() }}</p>
+
+                {# To do: put deletion of task in seperate controller(LoginController e.g.) #}
+                <div class="form-controls">
+                    <a class="white-btn" href="{{ app.user.getRoles()[0] == "ROLE_DEVELOPER" ? path('developer_task_delete', {id: task.getid()}) :  path('admin_task_delete', {id: task.getId()}) }}"> Delete </a>
+                    <a class="white-btn" href="{{ app.user.getRoles()[0] == "ROLE_DEVELOPER" ? path('developer_personal_profile') : path('admin_clients_view') }}"> Back </a>
+                </div>
+            </div>
+        </main>
+        {% if(app.user.getRoles()[0] == "ROLE_DEVELOPER") %}
+        <aside>
+            <div class="right-side-drawer">
+                <div class="right-side-drawer-input-fields">
+                    {{ form_start(editForm) }}
+                    {{ form_end(editForm) }}
+                </div>
+            </div>
+        <script src="{{ asset('js/task_details.js')}}"></script>
+        </aside>
+        {% endif %}
+    </div>
+
+{% endblock %}

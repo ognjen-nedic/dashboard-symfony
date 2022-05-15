@@ -1,0 +1,14 @@
+table {
+    width: 100%;
+    overflow-y: scroll;
+    text-align: left;
+    border-collapse: collapse;
+    overflow-x: scroll;
+}
+
+.search {
+    border: none;
+    padding-left: 10px;
+    color: black;
+    font-weight: 400;
+}

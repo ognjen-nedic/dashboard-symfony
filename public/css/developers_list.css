@@ -1,0 +1,60 @@
+::-webkit-scrollbar {
+    /* width: 8px; */
+    display: none;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+   
+
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+  
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+/* CONTENT */
+main {
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+    overflow-y: scroll;
+    text-align: left;
+    border-collapse: collapse;
+    overflow-x: scroll;
+}
+
+/* thead {
+    position: sticky;
+    top: 118px;
+    background-color: white;
+} */
+
+th {
+    height: 90px;
+}
+
+td:last-child,
+th:last-child {
+    border-right: none;
+}
+
+.table-options {
+    display: flex;
+    justify-content: left;
+    padding: 0;
+    padding-left: 20px;
+    margin: -1px;
+    border-bottom: 0;
+}
+
+.table-options img {
+    width: 15px;
+    margin: 10px;
+}
