@@ -23,9 +23,9 @@
                         {% for developer in developers %}
                             <tr>
                                 {% if developer.getAvatarPath() is not same as(null) %}
-                                <td> <img class="avatar_image" src="{{ asset('img/'~ developer.getAvatarPath() ~'.jpg') }}"/> </td>
+                                <td> <img class="avatar_image" src="{{ asset('img/'~ developer.getAvatarPath()) }}"/> </td>
                                 {% else %}
-                                <td> <img class="avatar_image" src="{{ asset('img/developers/developer_placeholder.jpg') }}"/> </td>
+                                <td> <img class="avatar_image" src="{{ asset('img/developers/developer_placeholder.jpeg') }}"/> </td>
                                 {% endif %}
                                 <td> {{ developer.getFirstName() }} </td>
                                 <td> {{ developer.getLastName() }} </td>

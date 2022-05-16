@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 15, 2022 at 01:34 PM
+-- Generation Time: May 16, 2022 at 09:44 AM
 -- Server version: 5.7.36
 -- PHP Version: 8.1.0
 
@@ -61,18 +61,19 @@ CREATE TABLE IF NOT EXISTS `client` (
   `avatar_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `avatar_alt` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `client`
 --
 
 INSERT INTO `client` (`id`, `client_name`, `email`, `billing`, `payment_method`, `invoice_data`, `avatar_path`, `avatar_alt`) VALUES
-(1, 'Jefferson Airplane', 'jefferson.airplane@universal.com', '4th Boulevard 666', 'Card', 'Payment by cash', 'clients/jefferson_airplane_1', NULL),
-(2, 'Big Brother', 'big.brother@gmail.com', 'Address 345', 'Direct deposit', NULL, 'clients/big_brother_2', NULL),
-(3, 'Roadhouse', 'roadhouse@gmail.com', 'End of Road 666', 'Cash', NULL, 'clients/roadhouse_3', NULL),
-(4, 'Infostud', 'infostud@gmail.com', 'Galerija 3', 'Cash', NULL, 'clients/infostud_4', NULL),
-(5, 'Alstek', 'info@alstek.com', 'Moše Tomića 6', 'Cash', NULL, 'clients/alstek_5', NULL);
+(1, 'Jefferson Airplane', 'jefferson.airplane@universal.com', '4th Boulevard 666', 'Card', 'Payment by cash', 'clients/jefferson_airplane_1.jpeg', NULL),
+(2, 'Big Brother', 'big.brother@gmail.com', 'Address 345', 'Direct deposit', NULL, 'clients/big_brother_2.jpeg', NULL),
+(3, 'Roadhouse', 'roadhouse@gmail.com', 'End of Road 666', 'Cash', NULL, 'clients/roadhouse_3.jpeg', NULL),
+(4, 'Infostud', 'infostud@gmail.com', 'Galerija 3', 'Cash', NULL, 'clients/infostud_4.jpeg', NULL),
+(5, 'Alstek', 'info@alstek.com', 'Moše Tomića 6', 'Cash', NULL, 'clients/alstek_5.jpeg', NULL),
+(7, 'Stressfull', 'stressfull@universal.com', 'End of Road 777', 'Cash', NULL, 'clients/imagetest-628219468d6cd.jpg', NULL);
 
 -- --------------------------------------------------------
 
@@ -104,12 +105,12 @@ CREATE TABLE IF NOT EXISTS `developer` (
 --
 
 INSERT INTO `developer` (`id`, `first_name`, `last_name`, `email`, `phone`, `street`, `city`, `ptt`, `country`, `password`, `bank_account`, `avatar_path`, `avatar_alt`, `roles`) VALUES
-(1, 'Jim', 'Morrison', 'lizard.king@universal.com', '+381631596874', 'Love Street 8', 'Melbourne', 32901, 'Florida', '$2y$13$rg.pamW9ACBfaNI9jH0.suRq5mWMueXghQpqQA39awT7ylWQFrK1a', '170-30024659000-11', 'developers/jim_morrison_1', NULL, '[]'),
-(2, 'Grace', 'Slick', 'white.alice@universal.com', '+381621588547', 'Tobacco Road 26', 'Highland Park', 60035, 'Illinois', '$2y$13$r/gIKd9unsR/fN5Lg/03neL2DvWJ6DiEK1pDwmMLCGTQWIURSoGk6', '265-25635779000-170', 'developers/grace_slick_2', NULL, '[]'),
-(3, 'Roger', 'Waters', 'roger.waters@universal.com', '+381635987412', 'Pompeii Street 1', 'Great Bookham', 11375, 'United Kingdom', '$2y$13$W8pjzkcS65ThHyeVv3jHxO5R9sjgXNvL/g/UtxtaOVma9toM8uuE2', '321-984563710000-695', 'developers/roger_waters_3', NULL, '[]'),
-(4, 'Mariska', 'Veres', 'shocking.you@universal.com', '+381635961203', 'Tobacco Road 56', 'Hague', 101500, 'Netherlands', '$2y$13$bV8s0Uy.K7wqDOPoBpRz4OAxZnmN47xOPKapu6kBAdl1ajppR8v2S', '321-25963014000-256', 'developers/mariska_veres_4', NULL, '[]'),
-(5, 'George', 'Orwell', 'animal.farmer@universal.com', '+381631984000', 'Animal Farm 1984', 'London', 27917, 'United Kingdom', '$2y$13$ITJwgeSioqNJB8ZaE4dhXOBx9CXPLjLqXBlkFQJIz1DqRVSsBiOkK', '265-36981523000-999', 'developers/george_orwell_5', NULL, '[]'),
-(6, 'Nick', 'Mason', 'nick.mason@universal.com', '+38163588547', 'Love Street 69', 'London', 101500, 'United Kingdom', '$2y$13$qiF6fUMi7jHgR7Iml4YBKuGcBFEDShF9I/vPrJnrujsObVEKibvw6', '321-96587423000-158', 'developers/nick_mason_6', NULL, '[]');
+(1, 'Jim', 'Morrison', 'lizard.king@universal.com', '+381631596874', 'Love Street 8', 'Melbourne', 32901, 'Florida', '$2y$13$rg.pamW9ACBfaNI9jH0.suRq5mWMueXghQpqQA39awT7ylWQFrK1a', '170-30024659000-11', 'developers/jim_morrison_1.jpeg', NULL, '[]'),
+(2, 'Grace', 'Slick', 'white.alice@universal.com', '+381621588547', 'Tobacco Road 26', 'Highland Park', 60035, 'Illinois', '$2y$13$r/gIKd9unsR/fN5Lg/03neL2DvWJ6DiEK1pDwmMLCGTQWIURSoGk6', '265-25635779000-170', 'developers/grace_slick_2.jpeg', NULL, '[]'),
+(3, 'Roger', 'Waters', 'roger.waters@universal.com', '+381635987412', 'Pompeii Street 1', 'Great Bookham', 11375, 'United Kingdom', '$2y$13$W8pjzkcS65ThHyeVv3jHxO5R9sjgXNvL/g/UtxtaOVma9toM8uuE2', '321-984563710000-695', 'developers/roger_waters_3.jpeg', NULL, '[]'),
+(4, 'Mariska', 'Veres', 'shocking.you@universal.com', '+381635961203', 'Tobacco Road 56', 'Hague', 101500, 'Netherlands', '$2y$13$bV8s0Uy.K7wqDOPoBpRz4OAxZnmN47xOPKapu6kBAdl1ajppR8v2S', '321-25963014000-256', 'developers/mariska_veres_4.jpeg', NULL, '[]'),
+(5, 'George', 'Orwell', 'animal.farmer@universal.com', '+381631984000', 'Animal Farm 1984', 'London', 27917, 'United Kingdom', '$2y$13$ITJwgeSioqNJB8ZaE4dhXOBx9CXPLjLqXBlkFQJIz1DqRVSsBiOkK', '265-36981523000-999', 'developers/george_orwell_5.jpeg', NULL, '[]'),
+(6, 'Nick', 'Mason', 'nick.mason@universal.com', '+38163588547', 'Love Street 69', 'London', 101500, 'United Kingdom', '$2y$13$qiF6fUMi7jHgR7Iml4YBKuGcBFEDShF9I/vPrJnrujsObVEKibvw6', '321-96587423000-158', 'developers/nick_mason_6.jpeg', NULL, '[]');
 
 -- --------------------------------------------------------
 

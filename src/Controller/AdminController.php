@@ -11,11 +11,12 @@ use App\Repository\ClientRepository;
 use App\Entity\Task;
 use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 // Only users from Admin class can access these routes.
 // Example of Admin entity credentials: ognjen.nedic@universal.com | lawoman
@@ -80,7 +81,7 @@ class AdminController extends AbstractController {
     }
 
     #[Route('clients', name: 'admin_clients_view')]
-    public function admin_clients_view(Request $request): Response {
+    public function admin_clients_view(Request $request, SluggerInterface $slugger): Response {
         $clients = $this->client_repository->findAll();
 
         $client = new Client();
@@ -89,6 +90,22 @@ class AdminController extends AbstractController {
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
+            $avatarFile = $form->get('avatar')->getData();
+            if($avatarFile) {
+                $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarFile->guessExtension();
+                //$newFilename = $safeFilename.'-'.uniqid();
+
+                try {
+                    $avatarFile->move($this->getParameter('clients_avatar_directory'), $newFilename);
+                } catch(FileException $e) {
+                    // I don't know...
+                }
+
+                $client->setAvatarPath('clients/'.$newFilename);
+            }
+
             $client = $form->getData();
             $this->client_repository->add($client, true);
             return $this->redirectToRoute('admin_clients_view');

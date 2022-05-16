@@ -18,6 +18,11 @@
                     <div class="profile-details">
                         <div class="profile-first-segment">
                             <img class="edit-developer-button" src="{{ asset('icon/edit.svg') }}" id="edit-profile-details" alt="Edit button">
+                             {% if app.user.getAvatarPath() is not same as(null) %}
+                                <img class="avatar_image" src="{{ asset('img/'~ app.user.getAvatarPath()) }}"/>
+                            {% else %}
+                                <img class="avatar_image" src="{{ asset('img/developers/developer_placeholder.jpeg') }}"/>
+                            {% endif %}
                             <h2>{{ app.user.firstName }} 
                             {{ app.user.lastName }}</h2>
                         </div>
@@ -42,6 +47,7 @@
                                     <input style="width: 150px" class="blue-btn" type="submit" name="filter_by_month_and_client"/>
                                 </div>
                             </form>
+                            <button class="blue-btn add-new-task-btn">Add new task</button>
                             <a class="white-btn" href="{{ path('logout') }}">Logout</a>
                         </div>
                     </div>
@@ -68,12 +74,11 @@
                                     <td> {{ task.getTime()|format_datetime(pattern="HH:mm:ss") }} </td>
                                     <td> <a href="{{ path('developer_task_details', {id: task.getId()}) }}"><img src="{{ asset('icon/eye.svg') }}"></a> </td>
                             {% else %}
-                                    <td colspan="4" style="text-align: center">No tasks found</td>
+                                    <td colspan="5" style="text-align: center">No tasks found</td>
                             {% endfor %}
                                 </tr>
                         </tbody>
                     </table>
-                    <button class="blue-btn add-new-task-btn">Add new task</button>
                 </div>
             </div>
         </main>

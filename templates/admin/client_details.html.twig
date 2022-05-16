@@ -16,9 +16,9 @@
                     <div class="profile-first-segment">
                         <img class="edit-client-button" src="{{ asset('icon/edit.svg') }}" id="edit-profile-details" alt="Edit button">
                         {% if client.getAvatarPath() is not same as(null) %}
-                                    <img class="avatar_image" src="{{ asset('img/'~ client.getAvatarPath() ~'.jpg') }}"/>
+                                    <img class="avatar_image" src="{{ asset('img/'~ client.getAvatarPath()) }}"/>
                                 {% else %}
-                                    <img class="avatar_image" src="{{ asset('img/clients/client_placeholder.jpg') }}"/>
+                                    <img class="avatar_image" src="{{ asset('img/clients/client_placeholder.jpeg') }}"/>
                                 {% endif %}
                         <h1> {{ client.getClientName() }} </h1>
                     </div>
@@ -81,6 +81,9 @@
                 <div class="right-side-drawer-input-fields">
                     <h2> Edit this client </h2>
                     {{ form_start(form) }}
+                        {{ form_widget(form.avatar) }}
+                        {{ form_errors(form.avatar) }}
+
                         {{ form_widget(form.clientName) }}
                         {{ form_errors(form.clientName) }}
 

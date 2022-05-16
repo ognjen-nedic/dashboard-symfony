@@ -23,9 +23,9 @@
                         <div class="profile-first-segment">
                             <img class="edit-developer-button" src="{{ asset('icon/edit.svg') }}" id="edit-profile-details" alt="Edit button">
                             {% if developer.getAvatarPath() is not same as(null) %}
-                                <img class="avatar_image" src="{{ asset('img/'~ developer.getAvatarPath() ~'.jpg') }}"/>
+                                <img class="avatar_image" src="{{ asset('img/'~ developer.getAvatarPath()) }}"/>
                             {% else %}
-                                <img class="avatar_image" src="{{ asset('img/developers/developer_placeholder.jpg') }}"/>
+                                <img class="avatar_image" src="{{ asset('img/developers/developer_placeholder.jpeg') }}"/>
                             {% endif %}
                             <h2> {{ developer.getFirstName() }} 
                             {{ developer.getLastName() }}</h2>
