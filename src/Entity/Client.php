@@ -97,6 +97,7 @@ class Client
         return $this->avatarPath;
     }
 
+    // Format of this field is 'clients/__fileName__.__fileExtention__'
     public function setAvatarPath(?string $avatarPath): self {
         $this->avatarPath = $avatarPath;
         return $this;

@@ -22,7 +22,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 // Example of Admin entity credentials: ognjen.nedic@universal.com | lawoman
 #[Route('admin/')]
 class AdminController extends AbstractController {
-    // Do avoid multiple calls to repositories in route functions as arguments, they are defined in __construct as services
+    // To avoid multiple calls to repositories in route functions as arguments, they are defined in __construct as services
     private $developer_repository;
     private $client_repository;
     private $task_repository;
@@ -46,7 +46,7 @@ class AdminController extends AbstractController {
     }
     
     #[Route('developers/{id<\d+>}', name: 'admin_developer_details')]
-    public function admin_developers_details($id, Request $request, UserPasswordHasherInterface $passwordHasher) {
+    public function admin_developers_details($id, Request $request, UserPasswordHasherInterface $passwordHasher, SluggerInterface $slugger) {
         $developer = $this->developer_repository->find($id);
         $clients = $this->client_repository->findAll();
         $tasks = $developer->getTasks();
@@ -57,6 +57,31 @@ class AdminController extends AbstractController {
         
         if ($form->isSubmitted() && $form->isValid()) {
             $developer = $form->getData();
+
+            // Password Handle
+            $plainPassword = $form->get('plainPassword')->getData();
+            $hashedPassword = $passwordHasher->hashPassword(
+                $developer,
+                $plainPassword
+            );
+            $developer->setPassword($hashedPassword);
+
+            // Avatar picture handling
+            $avatarFile = $form->get('avatar')->getData();
+            if($avatarFile) {
+                $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarFile->guessExtension();
+
+                try {
+                    $avatarFile->move($this->getParameter('clients_avatar_directory'), $newFilename);
+                } catch(FileException $e) {
+                    // I don't know...
+                }
+
+                $developer->setAvatarPath('developers/'.$newFilename);
+            }
+            
             $this->developer_repository->add($developer);
             return $this->redirectToRoute('admin_developers_view');
         }
@@ -90,12 +115,12 @@ class AdminController extends AbstractController {
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
+            // Avatar picture handling
             $avatarFile = $form->get('avatar')->getData();
             if($avatarFile) {
                 $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarFile->guessExtension();
-                //$newFilename = $safeFilename.'-'.uniqid();
 
                 try {
                     $avatarFile->move($this->getParameter('clients_avatar_directory'), $newFilename);

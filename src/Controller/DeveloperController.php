@@ -10,10 +10,13 @@ use App\Repository\ClientRepository;
 use App\Repository\DeveloperRepository;
 use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 //Only users from Developer class can access these routes.
 // Credentials for developer example: lizard.king@universal.com | lawoman
@@ -33,7 +36,7 @@ class DeveloperController extends AbstractController {
     }
 
     #[Route('my_profile/', name: 'developer_personal_profile')]
-    public function developer_profile(Request $request): Response {
+    public function developer_profile(Request $request, UserPasswordHasherInterface $passwordHasher, SluggerInterface $slugger): Response {
         $currentDeveloper  = $this->security->getUser();
         $clients = $this->client_repository->findAll();
         $tasks = $currentDeveloper->getTasks();
@@ -63,6 +66,32 @@ class DeveloperController extends AbstractController {
 
         if ($editDeveloperForm->isSubmitted() && $editDeveloperForm->isValid()) {
             $currentDeveloper = $editDeveloperForm->getData();
+            
+            // Password Handle
+            $plainPassword = $editDeveloperForm->get('plainPassword')->getData();
+            $hashedPassword = $passwordHasher->hashPassword(
+                $currentDeveloper,
+                $plainPassword
+            );
+            $currentDeveloper->setPassword($hashedPassword);
+
+            // Avatar picture handling
+            $avatarFile = $editDeveloperForm->get('avatar')->getData();
+            if($avatarFile) {
+                $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarFile->guessExtension();
+
+                try {
+                    $avatarFile->move($this->getParameter('clients_avatar_directory'), $newFilename);
+                } catch(FileException $e) {
+                    // I don't know...
+                }
+
+                $currentDeveloper->setAvatarPath('developers/'.$newFilename);
+            }
+
+            
             $this->developer_repository->add($currentDeveloper);
             return $this->redirectToRoute('developer_personal_profile');
         }
@@ -96,6 +125,6 @@ class DeveloperController extends AbstractController {
         $task = $this->task_repository->find($id);
         $this->task_repository->remove($task);
 
-        return $this->redirectToRoute('admin_clients_view');
+        return $this->redirectToRoute('developer_personal_profile');
     }
 }

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Login! {% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" href="{{ asset('css/log-in.css')}}">
+    <div style="overflow:scroll" class="white-box">
+        <div class="content">
+            <h1>Login</h1>
+
+            {{ form_start(registrationForm) }}
+                {{ form_widget(registrationForm.firstName) }}
+                {{ form_errors(registrationForm.firstName) }}
+
+                {{ form_widget(registrationForm.lastName) }}
+                {{ form_errors(registrationForm.lastName) }}
+
+                {{ form_widget(registrationForm.avatar) }}
+                {{ form_errors(registrationForm.avatar) }}
+
+                {{ form_widget(registrationForm.email) }}
+                {{ form_errors(registrationForm.email) }}
+
+                {{ form_widget(registrationForm.plainPassword) }}
+                {{ form_errors(registrationForm.plainPassword) }}
+
+                {{ form_widget(registrationForm.phone) }}
+                {{ form_errors(registrationForm.phone) }}
+
+                {{ form_widget(registrationForm.street) }}
+                {{ form_errors(registrationForm.street) }}
+
+                {{ form_widget(registrationForm.city) }}
+                {{ form_errors(registrationForm.city) }}
+
+                {{ form_widget(registrationForm.PTT) }}
+                {{ form_errors(registrationForm.PTT) }}
+
+                {{ form_widget(registrationForm.country) }}
+                {{ form_errors(registrationForm.country) }}
+
+                {{ form_widget(registrationForm.bankAccount) }}
+                {{ form_errors(registrationForm.bankAccount) }}
+
+                <div class="form-controls">
+                    <a class="cancel-btn" href="#"> Cancel </a>
+                    {{ form_row(registrationForm.submit) }}
+                </div>
+            {{ form_end(registrationForm) }}
+            
+            {# <form action="{{ path('login_form') }}" method="POST">
+            </form> #}
+        <div>
+    </div>
+{% endblock %}
